@@ -47,27 +47,43 @@
         <!--<DataGrid Grid.Row="1" Grid.Column="3" Grid.RowSpan="2" Grid.ColumnSpan="5" 
                   ItemsSource="{Binding Data}">
         </DataGrid>-->
-        <ScrollViewer Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="5" Grid.RowSpan="2" >
+        <Grid Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="10*"/>
+            </Grid.ColumnDefinitions>
+            <!--Head-->
+            <TextBox IsReadOnly="True" Grid.Column="0" Text="Source" HorizontalAlignment="Stretch" />
+            <TextBox IsReadOnly="True" Grid.Column="1" Text="Url" HorizontalAlignment="Stretch"/>
+            <TextBox IsReadOnly="True" Grid.Column="2" Text="Content" HorizontalAlignment="Stretch"/>
+        </Grid>
+        <ScrollViewer Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="5" VerticalScrollBarVisibility="Hidden">
             <ItemsControl ItemsSource="{Binding Data, UpdateSourceTrigger=PropertyChanged}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="5*"/>
+                                <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="10*"/>
                             </Grid.ColumnDefinitions>
-                            <TextBox IsReadOnly="True" Grid.Column="0" Text="{Binding Source.Name}"/>
-                            <TextBox IsReadOnly="True" Grid.Column="1" Text="{Binding Url}"/>
-                            <TextBox IsReadOnly="True" Grid.Column="2" 
-                                 Text="{Binding Content}"
-                                 TextWrapping="Wrap"/>
+                            <!--Body-->
+                            <TextBox IsReadOnly="True" Grid.Row="1" Grid.Column="0" Text="{Binding Source.Name}"/>
+                            <RichTextBox IsReadOnly="True"  Grid.Row="1" Grid.Column="1" IsDocumentEnabled="True">
+                                <FlowDocument>
+                                    <Paragraph>
+                                        <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="{Binding Url}">link</Hyperlink>
+                                    </Paragraph>
+                                </FlowDocument>
+                            </RichTextBox>
+                            <TextBox IsReadOnly="True" Grid.Row="1" Grid.Column="2" Text="{Binding Content}" TextWrapping="Wrap"/>
                         </Grid>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </ScrollViewer>
-        
+
 
         <!--_________________ROW 2_________________-->
 
@@ -86,19 +102,18 @@
         <!--_________________ROW 4_________________-->
 
         <!--Поиск слова-->
-        <TextBox Grid.Row="4" Grid.Column="6" Margin="2,0" Text="{Binding SearchString}"/>
+        <TextBox Grid.Row="4" Grid.Column="6" Margin="2,0" Text="{Binding SearchString}"
+                 Width="200"/>
         <Button Grid.Row="4" Grid.Column="7" Margin="2,0" Content="Найти" 
                 Height="auto" Width="100"
                 Command="{Binding SearchCommand}"/>
-    <!--Фильтр-->
-
-        <ComboBox Grid.Row="4" Grid.Column="5" Margin="2,0" 
+        <!--Фильтр-->
+        <ComboBox Grid.Row="4" Grid.Column="5" Margin="2,0" Width="200"
                   ItemsSource="{Binding Sources, UpdateSourceTrigger=PropertyChanged}" 
                   SelectedItem="{Binding SelectedSource}"
-                  DisplayMemberPath="Name"
-                  SelectedIndex="0"/>
+                  DisplayMemberPath="Name"/>
 
-            <!--_________________ROW 5_________________-->
+        <!--_________________ROW 5_________________-->
         <!--Добавление новой записи-->
         <Label Grid.Row="5" Grid.Column="4" Margin="2,0"
                Content="Источник" 
@@ -115,17 +130,17 @@
 
         <!--_________________ROW 6_________________-->
         <!--Добавление новой записи-->
-        <ComboBox Grid.Row="6" Grid.Column="4" Margin="2,0" IsEditable="True" MinWidth="200"
-                  ItemsSource="{Binding InputSources, UpdateSourceTrigger=PropertyChanged}" 
-                  SelectedItem="{Binding InputSelectedSource}"
-                  DisplayMemberPath="Name"
-                  SelectedIndex="0"/>
+        <ComboBox Grid.Row="6" Grid.Column="4" Margin="2,0" IsEditable="True"
+                 ItemsSource="{Binding InputSources, UpdateSourceTrigger=PropertyChanged}"
+                 SelectedItem="{Binding InputSelectedSource}"
+                 DisplayMemberPath="Name"
+                 Width="200"/>
         <TextBox Grid.Row="6" Grid.Column="5" Margin="2,0"
                  Text="{Binding InputResult.Url}"
-                 MinWidth="200"/>
+                 Width="200"/>
         <TextBox Grid.Row="6" Grid.Column="6" Margin="2,0"
                  Text="{Binding InputResult.Content}"
-                 MinWidth="200"/>
+                 Width="200"/>
         <Button Grid.Row="6" Grid.Column="7" Margin="2,0"
                 Content="Добавить"
                 Height="auto" Width="100"

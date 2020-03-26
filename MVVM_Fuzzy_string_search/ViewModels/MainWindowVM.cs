@@ -29,13 +29,26 @@ namespace MVVM_Fuzzy_string_search.ViewModels
             }
         }
 
-        public Source SelectedSource { get; set; } = new Source();
+        private Source _selectSource = new Source() { Id = 0, Name = "All", RequestResults = db.RequestResults.ToList<RequestResult>() };
+        public Source SelectedSource
+        {
+            get
+            {
+                return _selectSource;
+            }
+            set
+            {
+                if (value == null) return;
+                Set(ref _selectSource, value);
+            }
+        }
         public List<Source> Sources
         {
             get
             {
                 List<Source> tmp = new List<Source>();
-                tmp.Add(new Source() { Id = 0, Name = "All", RequestResults = db.RequestResults.ToList<RequestResult>() });
+                SelectedSource = new Source() { Id = 0, Name = "All", RequestResults = db.RequestResults.ToList<RequestResult>() };
+                tmp.Add(SelectedSource);
                 tmp.AddRange(db.Sources.ToList<Source>());
                 return tmp;
             }
@@ -52,7 +65,7 @@ namespace MVVM_Fuzzy_string_search.ViewModels
 
         public List<RequestResult> Data
         {
-            get 
+            get
             {
                 if (String.IsNullOrWhiteSpace(SearchString))
                 {
@@ -78,7 +91,7 @@ namespace MVVM_Fuzzy_string_search.ViewModels
             AddResult = new RelayCommand(OnAddResult);
             SearchCommand = new RelayCommand(OnSearchCommand);
             //AddToDb();
-            
+
             OnPropertyChanged("Sources");
             OnPropertyChanged("Data");
         }
@@ -113,7 +126,7 @@ namespace MVVM_Fuzzy_string_search.ViewModels
 
             db.RequestResults.Add(result);
             db.SaveChanges();
-            OnPropertyChanged("Source");
+            OnPropertyChanged("Sources");
             OnPropertyChanged("Data");
         }
     }

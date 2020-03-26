@@ -40,21 +40,32 @@ namespace MVVM_Fuzzy_string_search.ViewModels
                 return tmp;
             }
         }
+
+        public Source InputSelectedSource { get; set; } = new Source();
+        public List<Source> InputSources
+        {
+            get
+            {
+                return db.Sources.ToList<Source>();
+            }
+        }
+
         public List<RequestResult> Data
         {
             get 
             {
                 if (String.IsNullOrWhiteSpace(SearchString))
                 {
-                    return db.RequestResults.ToList<RequestResult>().Where(r => r.SourceId == SelectedSource.Id).ToList();
+                    return SelectedSource.RequestResults.ToList<RequestResult>();
                 }
-                List<RequestResult> tmp = db.RequestResults.Where(res => res.Content.Contains(SearchString)).ToList<RequestResult>();
+                //List<RequestResult> tmp = db.RequestResults.Where(res => res.Content.Contains(SearchString)).ToList<RequestResult>();
+                List<RequestResult> tmp = SelectedSource.RequestResults.ToList<RequestResult>().Where(res => res.Content.Contains(SearchString)).ToList<RequestResult>();
                 if (tmp.Count < 5)
                 {
-                    tmp = db.RequestResults.ToList<RequestResult>().
+                    tmp = SelectedSource.RequestResults.ToList<RequestResult>().
                         Where(res => VectorModel.CompareSenteces(SearchString, res.Content) >= 0.85).ToList<RequestResult>();
                 }
-                return SelectedSource.RequestResults.ToList<RequestResult>();
+                return tmp;
             }
         }
 
@@ -67,6 +78,9 @@ namespace MVVM_Fuzzy_string_search.ViewModels
             AddResult = new RelayCommand(OnAddResult);
             SearchCommand = new RelayCommand(OnSearchCommand);
             //AddToDb();
+            
+            OnPropertyChanged("Sources");
+            OnPropertyChanged("Data");
         }
 
         //
@@ -92,13 +106,15 @@ namespace MVVM_Fuzzy_string_search.ViewModels
         {
             RequestResult result = new RequestResult
             {
-                Source = InputResult.Source,
+                Source = InputSelectedSource,
                 Content = InputResult.Content,
-                Url = InputResult.Url
+                Url = InputResult.Url,
+                SourceId = InputSelectedSource.Id
             };
 
             db.RequestResults.Add(result);
             db.SaveChanges();
+            OnPropertyChanged("Source");
             OnPropertyChanged("Data");
         }
     }

@@ -91,12 +91,14 @@
                 Height="auto" Width="100"
                 Command="{Binding SearchCommand}"/>
     <!--Фильтр-->
+
         <ComboBox Grid.Row="4" Grid.Column="5" Margin="2,0" 
                   ItemsSource="{Binding Sources, UpdateSourceTrigger=PropertyChanged}" 
                   SelectedItem="{Binding SelectedSource}"
-                  DisplayMemberPath="Name"/>
+                  DisplayMemberPath="Name"
+                  SelectedIndex="0"/>
 
-        <!--_________________ROW 5_________________-->
+            <!--_________________ROW 5_________________-->
         <!--Добавление новой записи-->
         <Label Grid.Row="5" Grid.Column="4" Margin="2,0"
                Content="Источник" 
@@ -113,9 +115,11 @@
 
         <!--_________________ROW 6_________________-->
         <!--Добавление новой записи-->
-        <ComboBox Grid.Row="6" Grid.Column="4" Margin="2,0" IsEditable="True"
-                 Text="{Binding InputResult.Source}"
-                 MinWidth="200"/>
+        <ComboBox Grid.Row="6" Grid.Column="4" Margin="2,0" IsEditable="True" MinWidth="200"
+                  ItemsSource="{Binding InputSources, UpdateSourceTrigger=PropertyChanged}" 
+                  SelectedItem="{Binding InputSelectedSource}"
+                  DisplayMemberPath="Name"
+                  SelectedIndex="0"/>
         <TextBox Grid.Row="6" Grid.Column="5" Margin="2,0"
                  Text="{Binding InputResult.Url}"
                  MinWidth="200"/>

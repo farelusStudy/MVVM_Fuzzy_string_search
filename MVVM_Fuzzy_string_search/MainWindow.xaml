@@ -11,7 +11,7 @@
     <Window.DataContext>
         <l:MainWindowVM/>
     </Window.DataContext>
-    <Grid>
+    <Grid Margin="-2,0,1.6,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="10"/>
             <RowDefinition Height="auto"/>
@@ -44,10 +44,10 @@
         <GridSplitter Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" 
                       Width="2" VerticalAlignment="Stretch" HorizontalAlignment="Center"/>
         <!--Результат запроса-->
-        <!--<DataGrid Grid.Row="1" Grid.Column="3" Grid.RowSpan="2" Grid.ColumnSpan="5" 
+        <DataGrid Grid.Row="1" Grid.Column="3" Grid.RowSpan="2" Grid.ColumnSpan="5" 
                   ItemsSource="{Binding Data}">
-        </DataGrid>-->
-        <ScrollViewer Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="5" Grid.RowSpan="2" >
+        </DataGrid>
+        <!--<ScrollViewer Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="5" Grid.RowSpan="2" >
             <ItemsControl ItemsSource="{Binding Data, UpdateSourceTrigger=PropertyChanged}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
@@ -66,7 +66,7 @@
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
-        </ScrollViewer>
+        </ScrollViewer>-->
         
 
         <!--_________________ROW 2_________________-->

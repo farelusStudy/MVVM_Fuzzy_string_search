@@ -14,5 +14,6 @@ namespace MVVM_Fuzzy_string_search.Models
         }
 
         public DbSet<RequestResult> RequestResults { get; set; }
+        public DbSet<Source> Sources { get; set; }
     }
 }

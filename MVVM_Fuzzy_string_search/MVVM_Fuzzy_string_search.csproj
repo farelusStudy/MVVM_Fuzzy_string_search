@@ -68,6 +68,7 @@
     <Compile Include="Models\ParserTxtToResult.cs" />
     <Compile Include="Models\RequestResult.cs" />
     <Compile Include="Models\ResultContext.cs" />
+    <Compile Include="Models\Source.cs" />
     <Compile Include="Models\VectorModel.cs" />
     <Compile Include="ViewModels\MainWindowVM.cs" />
     <Compile Include="ViewModels\RelayCommand.cs" />

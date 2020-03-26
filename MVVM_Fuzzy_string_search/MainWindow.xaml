@@ -54,11 +54,17 @@
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="5*"/>
+                                <ColumnDefinition Width="auto"/>
                                 <ColumnDefinition Width="10*"/>
                             </Grid.ColumnDefinitions>
                             <TextBox IsReadOnly="True" Grid.Column="0" Text="{Binding Source.Name}"/>
-                            <TextBox IsReadOnly="True" Grid.Column="1" Text="{Binding Url}"/>
+                            <RichTextBox IsReadOnly="True" Grid.Column="1" IsDocumentEnabled="True">
+                                <FlowDocument>
+                                    <Paragraph>
+                                        <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="{Binding Url}">link</Hyperlink>
+                                    </Paragraph>
+                                </FlowDocument>
+                            </RichTextBox>
                             <TextBox IsReadOnly="True" Grid.Column="2" 
                                  Text="{Binding Content}"
                                  TextWrapping="Wrap"/>
@@ -86,12 +92,13 @@
         <!--_________________ROW 4_________________-->
 
         <!--Поиск слова-->
-        <TextBox Grid.Row="4" Grid.Column="6" Margin="2,0" Text="{Binding SearchString}"/>
+        <TextBox Grid.Row="4" Grid.Column="6" Margin="2,0" Text="{Binding SearchString}"
+                 Width="200"/>
         <Button Grid.Row="4" Grid.Column="7" Margin="2,0" Content="Найти" 
                 Height="auto" Width="100"
                 Command="{Binding SearchCommand}"/>
-    <!--Фильтр-->
-        <ComboBox Grid.Row="4" Grid.Column="5" Margin="2,0" 
+        <!--Фильтр-->
+        <ComboBox Grid.Row="4" Grid.Column="5" Margin="2,0" Width="200"
                   ItemsSource="{Binding Sources, UpdateSourceTrigger=PropertyChanged}" 
                   SelectedItem="{Binding SelectedSource}"
                   DisplayMemberPath="Name"/>
@@ -115,13 +122,13 @@
         <!--Добавление новой записи-->
         <ComboBox Grid.Row="6" Grid.Column="4" Margin="2,0" IsEditable="True"
                  Text="{Binding InputResult.Source}"
-                 MinWidth="200"/>
+                 Width="200"/>
         <TextBox Grid.Row="6" Grid.Column="5" Margin="2,0"
                  Text="{Binding InputResult.Url}"
-                 MinWidth="200"/>
+                 Width="200"/>
         <TextBox Grid.Row="6" Grid.Column="6" Margin="2,0"
                  Text="{Binding InputResult.Content}"
-                 MinWidth="200"/>
+                 Width="200"/>
         <Button Grid.Row="6" Grid.Column="7" Margin="2,0"
                 Content="Добавить"
                 Height="auto" Width="100"

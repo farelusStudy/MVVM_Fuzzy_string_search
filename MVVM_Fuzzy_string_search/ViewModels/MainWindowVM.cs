@@ -72,8 +72,7 @@ namespace MVVM_Fuzzy_string_search.ViewModels
         //
         public void AddToDb()
         {
-
-            ParseResult file = ParserTxtToResult.Parse(@"C:\Users\rafae\OneDrive\Рабочий стол\res.txt");
+            ParseResult file = ParserTxtToResult.Parse(@"D:\Timur\6_Semester\SPIT\timres.txt");
             List<Source> sources = file.Sources;
             List<RequestResult> res = file.RequestResults;
 

@@ -16,6 +16,7 @@ namespace MVVM_Fuzzy_string_search.Models
             Queue<string> Lines = new Queue<string>(lines);
 
             List<RequestResult> results = new List<RequestResult>();
+            List<Source> sources = new List<Source>();
             if (lines.Length == 0) return results;
 
 
@@ -39,8 +40,8 @@ namespace MVVM_Fuzzy_string_search.Models
                         line = "";
                     }
                 } while (!String.IsNullOrWhiteSpace(line));
-
-                RequestResult newRes = new RequestResult { Source = source, Url = url, Content = content };
+                Source tmpSource = sources.Where(s => s.Name == source).FirstOrDefault() ?? new Source() { Name = source};
+                RequestResult newRes = new RequestResult { Source = tmpSource, Url = url, Content = content };
                 results.Add(newRes);
             }
 

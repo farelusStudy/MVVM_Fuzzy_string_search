@@ -1,0 +1,123 @@
+﻿<Window x:Class="MVVM_Fuzzy_string_search.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MVVM_Fuzzy_string_search"
+        xmlns:l="clr-namespace:MVVM_Fuzzy_string_search.ViewModels"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="840" MinWidth="840" 
+        Background="Beige">
+    <Window.DataContext>
+        <l:MainWindowVM/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="10"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="10"/>
+        </Grid.ColumnDefinitions>
+
+        <!--_________________ROW 1_________________-->
+        <!--Выбор БД-->
+        <ListBox Grid.Row="1" Grid.Column="1" Grid.RowSpan="2"
+                 MinHeight="200" MinWidth="100"/>
+        <GridSplitter Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" 
+                      Width="2" VerticalAlignment="Stretch" HorizontalAlignment="Center"/>
+        <!--Результат запроса-->
+        <!--<DataGrid Grid.Row="1" Grid.Column="3" Grid.RowSpan="2" Grid.ColumnSpan="5" 
+                  ItemsSource="{Binding Data}">
+        </DataGrid>-->
+        <ScrollViewer Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="5" Grid.RowSpan="2" >
+            <ItemsControl ItemsSource="{Binding Data, UpdateSourceTrigger=PropertyChanged}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="5*"/>
+                                <ColumnDefinition Width="10*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox IsReadOnly="True" Grid.Column="0" Text="{Binding Source}"/>
+                            <TextBox IsReadOnly="True" Grid.Column="1" Text="{Binding Url}"/>
+                            <TextBox IsReadOnly="True" Grid.Column="2" 
+                                 Text="{Binding Content}"
+                                 TextWrapping="Wrap"/>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+        
+
+        <!--_________________ROW 2_________________-->
+
+
+        <!--_________________ROW 3_________________-->
+        <!--Поиск слова-->
+        <Label Grid.Row="3" Grid.Column="6" 
+               Content="Поиск"
+               HorizontalAlignment="Left"/>
+
+
+        <!--_________________ROW 4_________________-->
+
+        <!--Поиск слова-->
+        <TextBox Grid.Row="4" Grid.Column="6" Text="{Binding SearchString}"/>
+        <Button Grid.Row="4" Grid.Column="7" Content="Найти"
+                Height="auto" Width="100"
+                Command="{Binding SearchCommand}"/>
+
+
+        <!--_________________ROW 5_________________-->
+        <!--Добавление новой записи-->
+        <Label Grid.Row="5" Grid.Column="4" 
+               Content="Источник" 
+               HorizontalAlignment="Left"/>
+        <Label Grid.Row="5" Grid.Column="5" 
+               Content="Ссылка"
+               HorizontalAlignment="Left"/>
+        <Label Grid.Row="5" Grid.Column="6"
+               Content="Описание"
+               HorizontalAlignment="Left"/>
+
+
+
+
+        <!--_________________ROW 6_________________-->
+        <!--Добавление новой записи-->
+        <TextBox Grid.Row="6" Grid.Column="4"
+                 Text="{Binding InputResult.Source}"
+                 MinWidth="200"/>
+        <TextBox Grid.Row="6" Grid.Column="5"
+                 Text="{Binding InputResult.Url}"
+                 MinWidth="200"/>
+        <TextBox Grid.Row="6" Grid.Column="6"
+                 Text="{Binding InputResult.Content}"
+                 MinWidth="200"/>
+        <Button Grid.Row="6" Grid.Column="7" Content="Добавить"
+                Height="auto" Width="100"
+                Command="{Binding AddResult}"/>
+        <!--_________________ROW 7_________________-->
+        <!--_________________ROW 8_________________-->
+    </Grid>
+</Window>

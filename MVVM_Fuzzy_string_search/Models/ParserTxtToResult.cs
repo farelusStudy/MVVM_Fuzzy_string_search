@@ -10,14 +10,13 @@ namespace MVVM_Fuzzy_string_search.Models
 {
     class ParserTxtToResult
     {
-        public static List<RequestResult> Parse(string filePth)
+        public static ParseResult Parse(string filePth)
         {
             string[] lines = File.ReadAllLines(filePth);
             Queue<string> Lines = new Queue<string>(lines);
 
             List<RequestResult> results = new List<RequestResult>();
             List<Source> sources = new List<Source>();
-            if (lines.Length == 0) return results;
 
 
             while (Lines.Count >= 3)
@@ -40,12 +39,17 @@ namespace MVVM_Fuzzy_string_search.Models
                         line = "";
                     }
                 } while (!String.IsNullOrWhiteSpace(line));
-                Source tmpSource = sources.Where(s => s.Name == source).FirstOrDefault() ?? new Source() { Name = source};
+                Source tmpSource = sources.Where(s => s.Name == source).FirstOrDefault();
+                if(tmpSource == null)
+                {
+                    tmpSource = new Source() { Name = source };
+                    sources.Add(tmpSource);
+                }
                 RequestResult newRes = new RequestResult { Source = tmpSource, Url = url, Content = content };
                 results.Add(newRes);
             }
 
-            return results;
+            return new ParseResult() { Sources = sources, RequestResults = results };
         }
     }
 }

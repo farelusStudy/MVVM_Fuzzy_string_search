@@ -65,6 +65,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Migrations\202003261057430_InitialCreate.cs" />
+    <Compile Include="Migrations\202003261057430_InitialCreate.designer.cs">
+      <DependentUpon>202003261057430_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003261459336_NormalizeMigration.cs" />
+    <Compile Include="Migrations\202003261459336_NormalizeMigration.designer.cs">
+      <DependentUpon>202003261459336_NormalizeMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\ParseResult.cs" />
     <Compile Include="Models\ParserTxtToResult.cs" />
     <Compile Include="Models\RequestResult.cs" />
     <Compile Include="Models\ResultContext.cs" />
@@ -100,6 +110,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Migrations\202003261057430_InitialCreate.resx">
+      <DependentUpon>202003261057430_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003261459336_NormalizeMigration.resx">
+      <DependentUpon>202003261459336_NormalizeMigration.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

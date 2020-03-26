@@ -28,23 +28,33 @@ namespace MVVM_Fuzzy_string_search.ViewModels
                 Set(ref _searchString, value);
             }
         }
+
+        public Source SelectedSource { get; set; } = new Source();
+        public List<Source> Sources
+        {
+            get
+            {
+                List<Source> tmp = new List<Source>();
+                tmp.Add(new Source() { Id = 0, Name = "All", RequestResults = db.RequestResults.ToList<RequestResult>() });
+                tmp.AddRange(db.Sources.ToList<Source>());
+                return tmp;
+            }
+        }
         public List<RequestResult> Data
         {
             get 
             {
                 if (String.IsNullOrWhiteSpace(SearchString))
                 {
-                    return db.RequestResults.ToList<RequestResult>();
-                    //return _db;
+                    return db.RequestResults.ToList<RequestResult>().Where(r => r.SourceId == SelectedSource.Id).ToList();
                 }
                 List<RequestResult> tmp = db.RequestResults.Where(res => res.Content.Contains(SearchString)).ToList<RequestResult>();
-                //List<RequestResult> tmp = _db.Where(res => res.Content.Contains(SearchString)).ToList<RequestResult>();
                 if (tmp.Count < 5)
                 {
-                    tmp = db.RequestResults.ToList<RequestResult>().Where(res => VectorModel.CompareSenteces(SearchString, res.Content) >= 0.85).ToList<RequestResult>();
-                    //tmp = _db.Where(res => VectorModel.CompareSenteces(SearchString, res.Content) >= 0.9).ToList<RequestResult>();
+                    tmp = db.RequestResults.ToList<RequestResult>().
+                        Where(res => VectorModel.CompareSenteces(SearchString, res.Content) >= 0.85).ToList<RequestResult>();
                 }
-                return tmp;
+                return SelectedSource.RequestResults.ToList<RequestResult>();
             }
         }
 
@@ -62,11 +72,14 @@ namespace MVVM_Fuzzy_string_search.ViewModels
         //
         public void AddToDb()
         {
-            List<RequestResult> file = ParserTxtToResult.Parse(@"C:\Sharing\6_Semester\SPIT\SPIT_2\timres.txt");
-            foreach (var item in file)
-            {
-                db.RequestResults.Add(item);
-            }
+
+            ParseResult file = ParserTxtToResult.Parse(@"C:\Users\rafae\OneDrive\Рабочий стол\res.txt");
+            List<Source> sources = file.Sources;
+            List<RequestResult> res = file.RequestResults;
+
+            db.Sources.AddRange(sources);
+            db.SaveChanges();
+            db.RequestResults.AddRange(res);
             db.SaveChanges();
         }
 
